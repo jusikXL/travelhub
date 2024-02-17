@@ -4,7 +4,7 @@ import { useQuery } from '@tanstack/react-query';
 import Link from 'next/link';
 import { getAllHotels, getAllOrganisations } from '@/components/api-interactions';
 import { CardComponent } from '@/components/card';
-// import { CreateOrganisation } from '@/components/contract-interactions';
+import { CreateOrganisation } from '@/components/contract-interactions';
 import { Card, CardHeader } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
 import { Skeleton } from '@/components/ui/skeleton';
@@ -60,7 +60,7 @@ export default function HomeComponent() {
             <h2 className="text-2xl font-semibold tracking-tight">Find your dream stay</h2>
             <p className="text-sm text-muted-foreground">Top picks for you. Updated daily.</p>
           </div>
-          {/* <CreateOrganisation /> */}
+          <CreateOrganisation />
         </div>
         <Separator className="my-4" />
         <div className="grid grid-cols-4 gap-4">
