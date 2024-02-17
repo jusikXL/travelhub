@@ -9,6 +9,9 @@ from .commune import OrganisationFull, HotelBasic, OrganisationBasic, HotelFull
 
 router = APIRouter()
 
+#👃👃👃👃👃👃👃👃👃
+
+
 @router.get("/")
 def get_all_organisations(
     session: Session = Depends(get_session),
