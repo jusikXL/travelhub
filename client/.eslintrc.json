@@ -1,0 +1,31 @@
+{
+  "ignorePatterns": ["src/api/*"],
+  "extends": ["next/core-web-vitals", "plugin:@tanstack/eslint-plugin-query/recommended"],
+  "rules": {
+    "import/order": [
+      1,
+      {
+        "groups": ["external", "builtin", "internal", "parent", "sibling", "index", "object"],
+        "pathGroups": [
+          {
+            "pattern": "react",
+            "group": "external"
+          },
+          {
+            "pattern": "next",
+            "group": "external"
+          },
+          {
+            "pattern": "components",
+            "group": "internal"
+          }
+        ],
+        "pathGroupsExcludedImportTypes": ["internal"],
+        "alphabetize": {
+          "order": "asc",
+          "caseInsensitive": true
+        }
+      }
+    ]
+  }
+}
