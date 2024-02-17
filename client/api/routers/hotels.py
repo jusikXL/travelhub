@@ -34,7 +34,7 @@ def get_hotel(hotel_address: str, session: Session = Depends(get_session)) -> Ho
         )
         .where(HotelMetadata.address == hotel_address)
     )
-
+    # 👃👃
     try:
         hotel, organisation = session.exec(query).one()
     except exc.NoResultFound:
@@ -78,7 +78,7 @@ def get_user_hotels(
     user_address: str, session: Session = Depends(get_session)
 ) -> list[HotelBasic]:
     query = select(HotelMetadata).where(HotelMetadata.owner == user_address)
-
+    # 👃👃
     try:
         hotels = session.exec(query).all()
     except exc.NoResultFound:
@@ -135,7 +135,7 @@ def get_room(
                 checkOut=str(romm_booking.check_out),
             )
         )
-
+    # 👃👃
     room_full = RoomFull(
         id=str(room.Room.id),
         image=room.Room.image,
@@ -220,7 +220,7 @@ def get_past_next(
                 )
         else:
             continue
-
+            # 👃👃
     if check_in_timestamp >= room_bookings[-1].check_out:
         return PastNext(
             available=True,
@@ -306,7 +306,7 @@ def add_room(
         )
 
         return room_full
-
+    # 👃👃
     except IntegrityError as e:
         raise HTTPException(
             status_code=500,

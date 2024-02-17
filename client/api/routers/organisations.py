@@ -9,6 +9,7 @@ from .commune import OrganisationFull, HotelBasic, OrganisationBasic, HotelFull
 
 router = APIRouter()
 
+# 👃👃
 
 @router.post("/{address}/add_hotel")
 def add_hotel(
@@ -53,7 +54,7 @@ def add_hotel(
             description=added_hotel.description,
             rooms=[],
         )
-
+        # 👃👃
         return hotel_full
 
     except IntegrityError as e:
@@ -80,6 +81,7 @@ def get_organisation(
     hotels = session.exec(
         select(HotelMetadata).where(HotelMetadata.organisation == address)
     ).all()
+    # 👃👃
 
     # Convert hotels to HotelBasic model
     hotels_list = [
@@ -105,30 +107,7 @@ def get_organisation(
         hotels=hotels_list,
     )
 
-
-# @router.get("/{address}/hotels")
-# def get_all_hotels(address: str, session: Session = Depends(get_session)) -> list[HotelBasic]:
-#     try:
-#         hotels = session.exec(select(HotelMetadata).where(HotelMetadata.organisation == address)).all()
-#     except exc.NoResultFound:
-#         raise HTTPException(
-#             status_code=404,
-#             detail="No Hotels Found",
-#         )
-#     # Convert hotels to HotelBasic model
-#     hotels_list = [
-#         HotelBasic(
-#             title=hotel.title,
-#             subtitle=hotel.subtitle,
-#             city=hotel.city,
-#             location=hotel.location,
-#             image=hotel.image,
-#             address=hotel.address
-#         ) for hotel in hotels
-#     ]
-#
-#     return hotels_list
-
+# 👃👃
 
 @router.get("/user_organisations/{user_address}")
 def get_user_organisations_by_address(
@@ -206,7 +185,7 @@ def add_organisation(
         )
 
         return organisation_full
-
+    # 👃👃
     except IntegrityError as e:
         raise HTTPException(
             status_code=500,
