@@ -35,7 +35,10 @@ export type RoomBasic = {
 export type RoomFull = RoomBasic & {
   description: string;
   hotel: HotelBasic;
-  // available rooms
+  bookedPeriods: {
+    checkIn: string;
+    checkOut: string;
+  }[];
 };
 
 export type Booking = {

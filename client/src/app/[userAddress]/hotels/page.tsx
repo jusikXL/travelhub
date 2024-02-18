@@ -1,6 +1,7 @@
 'use client';
 
 import { useQuery } from '@tanstack/react-query';
+import Link from 'next/link';
 import React from 'react';
 import { getUserHotels } from '@/components/api-interactions';
 import { Card, CardTitle } from '@/components/ui/card';
@@ -25,15 +26,16 @@ export default function UserHotels({ params: { userAddress } }: { params: { user
           <div className="flex space-x-4 pb-4">
             {hotels ? (
               hotels.map((hotel) => (
-                <ScrollCardComponent
-                  key={hotel.title}
-                  image={hotel.image}
-                  title={hotel.title}
-                  className="w-[250px]"
-                  aspectRatio="portrait"
-                  width={250}
-                  height={330}
-                />
+                <Link key={hotel.address} href={`/hotels/${hotel.address}`}>
+                  <ScrollCardComponent
+                    image={hotel.image}
+                    title={hotel.title}
+                    className="w-[250px]"
+                    aspectRatio="portrait"
+                    width={250}
+                    height={330}
+                  />
+                </Link>
               ))
             ) : (
               <Skeleton className="h-36" />

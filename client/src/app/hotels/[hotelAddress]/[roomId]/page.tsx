@@ -11,6 +11,7 @@ import { toast } from 'sonner';
 import { useAccount, usePublicClient } from 'wagmi';
 import * as z from 'zod';
 import { getHotel, getRoom } from '@/components/api-interactions';
+import getPastNext from '@/components/api-interactions/get-past-next';
 import { CardComponent } from '@/components/card';
 import { ChangeRoomPrice, RemoveRoom } from '@/components/contract-interactions';
 import { Button } from '@/components/ui/button';
@@ -28,8 +29,8 @@ const formSchema = z.object({
     from: z.date(),
     to: z.date(),
   }),
-  pastBookingId: z.string().min(1),
-  nextBookingId: z.string().min(1),
+  // pastBookingId: z.string().min(1),
+  // nextBookingId: z.string().min(1),
 });
 
 type FormValues = z.infer<typeof formSchema>;
@@ -53,6 +54,13 @@ export default function RoomPage({
     },
   });
 
+  const disabledDates = room?.bookedPeriods.map((period) => {
+    return {
+      from: new Date(Number(period.checkIn) * 1000), // assuming checkIn is in seconds
+      to: new Date(Number(period.checkOut) * 1000), // assuming checkOut is in seconds
+    };
+  });
+
   const { data: hotel } = useQuery({
     queryKey: ['hotels', hotelAddress],
     queryFn: async () => {
@@ -65,8 +73,8 @@ export default function RoomPage({
     resolver: zodResolver(formSchema),
     defaultValues: {
       date: {
-        from: new Date(2024, 1, 16),
-        to: addDays(new Date(2024, 1, 16), 2),
+        from: new Date(2024, 1, 20),
+        to: addDays(new Date(2024, 1, 20), 2),
       },
     },
   });
@@ -77,8 +85,6 @@ export default function RoomPage({
     const nights = (checkOut - checkIn) / BigInt(86400);
 
     setIsPending(true);
-
-    console.log(checkIn, checkOut);
 
     let price;
     try {
@@ -91,7 +97,12 @@ export default function RoomPage({
       const totalPrice = nights * price;
 
       await approve(totalPrice);
-      await book(checkIn, checkOut, BigInt(values.pastBookingId), BigInt(values.nextBookingId));
+
+      const { data: pastNext } = await getPastNext(hotelAddress, roomId, checkIn.toString(), checkOut.toString());
+
+      console.log(pastNext);
+
+      await book(checkIn, checkOut, BigInt(pastNext.pastBookingId), BigInt(pastNext.nextBookingId));
     } catch (err: any) {
       toast.error(err.message);
     } finally {
@@ -139,6 +150,7 @@ export default function RoomPage({
       await resultPromise;
 
       queryClient.invalidateQueries({ queryKey: ['bookings', address] });
+      queryClient.invalidateQueries({ queryKey: ['rooms', hotelAddress, roomId] });
       toast.success('Booked!');
     } catch (err: any) {
       throw new Error(err.message);
@@ -189,47 +201,22 @@ export default function RoomPage({
                     <FormItem className="flex flex-col">
                       <FormLabel>Check in - out</FormLabel>
                       <FormControl>
-                        <Calendar
-                          initialFocus
-                          mode="range"
-                          defaultMonth={field.value.from}
-                          selected={field.value}
-                          onSelect={field.onChange}
-                          numberOfMonths={2}
-                        />
+                        {disabledDates && (
+                          <Calendar
+                            initialFocus
+                            mode="range"
+                            disabled={[...disabledDates, (date) => date < new Date()]}
+                            defaultMonth={field.value.from}
+                            selected={field.value}
+                            onSelect={field.onChange}
+                            numberOfMonths={2}
+                          />
+                        )}
                       </FormControl>
                       <FormDescription>Your check in and check out dates.</FormDescription>
                     </FormItem>
                   )}
                 />
-                <div className="grid grid-cols-2 gap-4">
-                  <FormField
-                    control={form.control}
-                    name="pastBookingId"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Booking ID</FormLabel>
-                        <FormControl>
-                          <Input placeholder="1" {...field} />
-                        </FormControl>
-                        <FormDescription>Past booking.</FormDescription>
-                      </FormItem>
-                    )}
-                  />
-                  <FormField
-                    control={form.control}
-                    name="nextBookingId"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Booking ID</FormLabel>
-                        <FormControl>
-                          <Input placeholder="2" {...field} />
-                        </FormControl>
-                        <FormDescription>Next booking.</FormDescription>
-                      </FormItem>
-                    )}
-                  />
-                </div>
               </div>
               <CardFooter className="p-0">
                 <Button type="submit" disabled={isPending || (isMounted && !isConnected)}>

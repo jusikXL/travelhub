@@ -1,6 +1,7 @@
 'use client';
 
 import { useQuery } from '@tanstack/react-query';
+import Link from 'next/link';
 import React from 'react';
 import { getUserOrganisations } from '@/components/api-interactions';
 import { Card, CardTitle } from '@/components/ui/card';
@@ -25,15 +26,16 @@ export default function UserOrganisations({ params: { userAddress } }: { params:
           <div className="flex space-x-4 pb-4">
             {organisations ? (
               organisations.map((organisation) => (
-                <ScrollCardComponent
-                  key={organisation.title}
-                  image={organisation.image}
-                  title={organisation.title}
-                  className="w-[250px]"
-                  aspectRatio="portrait"
-                  width={250}
-                  height={330}
-                />
+                <Link key={organisation.address} href={`/organisations/${organisation.address}`}>
+                  <ScrollCardComponent
+                    image={organisation.image}
+                    title={organisation.title}
+                    className="w-[250px]"
+                    aspectRatio="portrait"
+                    width={250}
+                    height={330}
+                  />
+                </Link>
               ))
             ) : (
               <Skeleton className="h-36" />
