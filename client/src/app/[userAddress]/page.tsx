@@ -18,7 +18,7 @@ export default function ProfilePage({ params: { userAddress } }: { params: { use
       </div>
       <div className="grid h-[70vh] w-full grid-cols-3">
         <div className="relative">
-          <Link href="#">
+          <Link href={`/${userAddress}/organisations`}>
             <Image
               className={cn('opacity-30 transition-all hover:scale-105 hover:opacity-100')}
               src="/my-organisations.png"
@@ -40,7 +40,7 @@ export default function ProfilePage({ params: { userAddress } }: { params: { use
           </Link>
         </div>
         <div className="relative">
-          <Link href="#">
+          <Link href={`/${userAddress}/hotels`}>
             <Image
               className={cn('opacity-30 transition-all hover:scale-105 hover:opacity-100')}
               src="/my-hotels.png"
