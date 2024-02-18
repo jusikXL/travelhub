@@ -121,6 +121,7 @@ export default function CreateHotel({ organisationAddress }: { organisationAddre
             setIsPending(false);
             queryClient.invalidateQueries({ queryKey: ['organisations', organisationAddress] });
             queryClient.invalidateQueries({ queryKey: ['hotels'], exact: true });
+            queryClient.invalidateQueries({ queryKey: ['hotels', values.owner] });
             return 'Hotel metadata attached!';
           },
 

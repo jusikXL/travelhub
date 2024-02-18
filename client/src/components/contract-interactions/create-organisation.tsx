@@ -113,6 +113,7 @@ export default function CreateOrganisation() {
           success: () => {
             setIsPending(false);
             queryClient.invalidateQueries({ queryKey: ['organisations'], exact: true });
+            queryClient.invalidateQueries({ queryKey: ['organisations', values.owner] });
             return 'Organisation metadata attached!';
           },
 
