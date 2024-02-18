@@ -1,108 +1,43 @@
-import { Metadata } from 'next';
+'use client';
+
+import { useQuery } from '@tanstack/react-query';
 import React from 'react';
+import { getUserOrganisations } from '@/components/api-interactions';
 import { Card, CardTitle } from '@/components/ui/card';
 import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
 import { ScrollCardComponent } from '@/components/ui/scroll-card';
-import { OrganisationBasic } from '@/lib/types';
+import { Skeleton } from '@/components/ui/skeleton';
 
-export const metadata: Metadata = {
-  title: 'Your Organisations',
-  description: 'Organisations that were created by You.',
-};
+export default function UserOrganisations({ params: { userAddress } }: { params: { userAddress: `0x${string}` } }) {
+  const { data: organisations } = useQuery({
+    queryKey: ['organisations', userAddress],
+    queryFn: async () => {
+      const response = await getUserOrganisations(userAddress);
+      return response.data;
+    },
+  });
 
-const organisationBasics: OrganisationBasic[] = [
-  {
-    address: '0xabc123',
-    title: 'Company A',
-    subtitle: 'Tech Startup',
-    image: '/company-a.jpg',
-  },
-  {
-    address: '0xdef456',
-    title: 'Company B',
-    subtitle: 'Consulting Firm',
-    image: '/company-b.jpg',
-  },
-  {
-    address: '0xghi789',
-    title: 'Company C',
-    subtitle: 'Marketing Agency',
-    image: '/company-c.jpg',
-  },
-  {
-    address: '0xabc123',
-    title: 'Company A',
-    subtitle: 'Tech Startup',
-    image: '/company-a.jpg',
-  },
-  {
-    address: '0xdef456',
-    title: 'Company B',
-    subtitle: 'Consulting Firm',
-    image: '/company-b.jpg',
-  },
-  {
-    address: '0xghi789',
-    title: 'Company C',
-    subtitle: 'Marketing Agency',
-    image: '/company-c.jpg',
-  },
-  {
-    address: '0xabc123',
-    title: 'Company A',
-    subtitle: 'Tech Startup',
-    image: '/company-a.jpg',
-  },
-  {
-    address: '0xdef456',
-    title: 'Company B',
-    subtitle: 'Consulting Firm',
-    image: '/company-b.jpg',
-  },
-  {
-    address: '0xghi789',
-    title: 'Company C',
-    subtitle: 'Marketing Agency',
-    image: '/company-c.jpg',
-  },
-  {
-    address: '0xabc123',
-    title: 'Company A',
-    subtitle: 'Tech Startup',
-    image: '/company-a.jpg',
-  },
-  {
-    address: '0xdef456',
-    title: 'Company B',
-    subtitle: 'Consulting Firm',
-    image: '/company-b.jpg',
-  },
-  {
-    address: '0xghi789',
-    title: 'Company C',
-    subtitle: 'Marketing Agency',
-    image: '/company-c.jpg',
-  },
-];
-
-export default function UserOrganisations() {
   return (
     <Card className="col-span-2 space-y-8 p-6">
       <CardTitle>Your organisations</CardTitle>
       <div className="relative">
         <ScrollArea>
           <div className="flex space-x-4 pb-4">
-            {organisationBasics.map((organisation) => (
-              <ScrollCardComponent
-                key={organisation.title}
-                image={organisation.image}
-                title={organisation.title}
-                className="w-[250px]"
-                aspectRatio="portrait"
-                width={250}
-                height={330}
-              />
-            ))}
+            {organisations ? (
+              organisations.map((organisation) => (
+                <ScrollCardComponent
+                  key={organisation.title}
+                  image={organisation.image}
+                  title={organisation.title}
+                  className="w-[250px]"
+                  aspectRatio="portrait"
+                  width={250}
+                  height={330}
+                />
+              ))
+            ) : (
+              <Skeleton className="h-36" />
+            )}
           </div>
           <ScrollBar orientation="horizontal" />
         </ScrollArea>
