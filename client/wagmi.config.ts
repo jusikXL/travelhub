@@ -9,7 +9,7 @@ export default defineConfig({
       project: '../contracts',
       include: ['Hotel.json', 'Organisation.json', 'OrganisationFactory.json', 'Stablecoin.json'],
       deployments: {
-        OrganisationFactory: '0x042c5bF7C2174941C550D93bd2F388f453AF07B2',
+        OrganisationFactory: '0x58bb99c193Fc8F30FbE5b27e3539003e1549d26d',
         Stablecoin: '0x518200E9F53BdEB9343170E960332AB5F48b0cFA',
       },
     }),

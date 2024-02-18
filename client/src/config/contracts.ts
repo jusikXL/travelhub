@@ -735,7 +735,7 @@ export const organisationFactoryAbi = [
 ] as const
 
 export const organisationFactoryAddress =
-  '0x042c5bF7C2174941C550D93bd2F388f453AF07B2' as const
+  '0x58bb99c193Fc8F30FbE5b27e3539003e1549d26d' as const
 
 export const organisationFactoryConfig = {
   address: organisationFactoryAddress,
