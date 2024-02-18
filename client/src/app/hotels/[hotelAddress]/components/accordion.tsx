@@ -23,7 +23,7 @@ export function AccordionComponent({
       <AccordionItem value="item-3">
         <AccordionTrigger>Cancellation delay</AccordionTrigger>
         {cancellationDelay ? (
-          <AccordionContent>{Number(cancellationDelay) / 1000} hours</AccordionContent>
+          <AccordionContent>{Number(cancellationDelay) / 3600} hours</AccordionContent>
         ) : (
           <Skeleton className="h-16" />
         )}
