@@ -1,7 +1,7 @@
 from sqlalchemy import exc
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.exc import IntegrityError
-from sqlmodel import Session, select, update
+from sqlmodel import Session, select
 
 from ..database import get_session
 from ..database.models import OrganisationMetadata, HotelMetadata
@@ -9,11 +9,12 @@ from .commune import OrganisationFull, HotelBasic, OrganisationBasic, HotelFull
 
 router = APIRouter()
 
+
 # 👃👃
 
 @router.post("/{address}/add_hotel")
 def add_hotel(
-    hotel: HotelMetadata, session: Session = Depends(get_session)
+        hotel: HotelMetadata, session: Session = Depends(get_session)
 ) -> HotelFull:
     try:
         # Check if the organization exists
@@ -57,7 +58,7 @@ def add_hotel(
         # 👃👃
         return hotel_full
 
-    except IntegrityError as e:
+    except IntegrityError:
         raise HTTPException(
             status_code=500,
             detail="Hotel with provided address already exists",
@@ -66,7 +67,7 @@ def add_hotel(
 
 @router.get("/{address}")
 def get_organisation(
-    address: str, session: Session = Depends(get_session)
+        address: str, session: Session = Depends(get_session)
 ) -> OrganisationFull:
     try:
         organisation = session.exec(
@@ -107,11 +108,12 @@ def get_organisation(
         hotels=hotels_list,
     )
 
+
 # 👃👃
 
 @router.get("/user_organisations/{user_address}")
 def get_user_organisations_by_address(
-    user_address: str, session: Session = Depends(get_session)
+        user_address: str, session: Session = Depends(get_session)
 ) -> list[OrganisationBasic]:
     query = select(OrganisationMetadata).where(
         OrganisationMetadata.owner == user_address
@@ -139,11 +141,11 @@ def get_user_organisations_by_address(
 
 @router.get("/")
 def get_all_organisations(
-    session: Session = Depends(get_session),
+        session: Session = Depends(get_session),
 ) -> list[OrganisationBasic]:
     try:
         organisations = session.exec(select(OrganisationMetadata)).all()
-    except exc.NoResultFound:#👃
+    except exc.NoResultFound:  # 👃
         raise HTTPException(
             status_code=404,
             detail="No Organisations Found",
@@ -165,7 +167,7 @@ def get_all_organisations(
 
 @router.post("/add_organisation")
 def add_organisation(
-    organisation: OrganisationMetadata, session: Session = Depends(get_session)
+        organisation: OrganisationMetadata, session: Session = Depends(get_session)
 ) -> OrganisationFull:
     try:
 
@@ -186,7 +188,7 @@ def add_organisation(
 
         return organisation_full
     # 👃👃
-    except IntegrityError as e:
+    except IntegrityError:
         raise HTTPException(
             status_code=500,
             detail="Organisation with provided contract address already exists",

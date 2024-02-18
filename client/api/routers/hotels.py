@@ -307,7 +307,7 @@ def add_room(
 
         return room_full
     # 👃👃
-    except IntegrityError as e:
+    except IntegrityError:
         raise HTTPException(
             status_code=500,
             detail="Room with provided id already exists in this hotel",
