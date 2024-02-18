@@ -1,0 +1,253 @@
+[
+    {
+      "type": "constructor",
+      "name": "",
+      "inputs": [
+        {
+          "type": "address",
+          "name": "initialOwner",
+          "internalType": "address"
+        },
+        {
+          "type": "address",
+          "name": "stablecoin",
+          "internalType": "contract IERC20"
+        }
+      ],
+      "outputs": [],
+      "stateMutability": "nonpayable"
+    },
+    {
+      "type": "error",
+      "name": "InvalidHotel",
+      "inputs": [
+        {
+          "type": "address",
+          "name": "hotelAddress",
+          "internalType": "address"
+        }
+      ],
+      "outputs": []
+    },
+    {
+      "type": "error",
+      "name": "OwnableInvalidOwner",
+      "inputs": [
+        {
+          "type": "address",
+          "name": "owner",
+          "internalType": "address"
+        }
+      ],
+      "outputs": []
+    },
+    {
+      "type": "error",
+      "name": "OwnableUnauthorizedAccount",
+      "inputs": [
+        {
+          "type": "address",
+          "name": "account",
+          "internalType": "address"
+        }
+      ],
+      "outputs": []
+    },
+    {
+      "type": "event",
+      "name": "HotelCreated",
+      "inputs": [
+        {
+          "type": "address",
+          "name": "hotelAddress",
+          "indexed": true,
+          "internalType": "address"
+        }
+      ],
+      "outputs": [],
+      "anonymous": false
+    },
+    {
+      "type": "event",
+      "name": "HotelRemoved",
+      "inputs": [
+        {
+          "type": "address",
+          "name": "hotelAddress",
+          "indexed": true,
+          "internalType": "address"
+        }
+      ],
+      "outputs": [],
+      "anonymous": false
+    },
+    {
+      "type": "event",
+      "name": "OwnershipTransferred",
+      "inputs": [
+        {
+          "type": "address",
+          "name": "previousOwner",
+          "indexed": true,
+          "internalType": "address"
+        },
+        {
+          "type": "address",
+          "name": "newOwner",
+          "indexed": true,
+          "internalType": "address"
+        }
+      ],
+      "outputs": [],
+      "anonymous": false
+    },
+    {
+      "type": "event",
+      "name": "RevenueCollected",
+      "inputs": [
+        {
+          "type": "address",
+          "name": "destination",
+          "indexed": true,
+          "internalType": "address"
+        },
+        {
+          "type": "uint256",
+          "name": "amount",
+          "indexed": false,
+          "internalType": "uint256"
+        },
+        {
+          "type": "uint256",
+          "name": "fee",
+          "indexed": false,
+          "internalType": "uint256"
+        }
+      ],
+      "outputs": [],
+      "anonymous": false
+    },
+    {
+      "type": "function",
+      "name": "collectRevenue",
+      "inputs": [
+        {
+          "type": "address",
+          "name": "destination",
+          "internalType": "address"
+        }
+      ],
+      "outputs": [],
+      "stateMutability": "nonpayable"
+    },
+    {
+      "type": "function",
+      "name": "createHotel",
+      "inputs": [
+        {
+          "type": "address",
+          "name": "hotelOwner",
+          "internalType": "address"
+        }
+      ],
+      "outputs": [
+        {
+          "type": "address",
+          "name": "hotelAddress",
+          "internalType": "address"
+        }
+      ],
+      "stateMutability": "nonpayable"
+    },
+    {
+      "type": "function",
+      "name": "hotels",
+      "inputs": [
+        {
+          "type": "address",
+          "name": "",
+          "internalType": "address"
+        }
+      ],
+      "outputs": [
+        {
+          "type": "bool",
+          "name": "",
+          "internalType": "bool"
+        }
+      ],
+      "stateMutability": "view"
+    },
+    {
+      "type": "function",
+      "name": "organisationFactory",
+      "inputs": [],
+      "outputs": [
+        {
+          "type": "address",
+          "name": "",
+          "internalType": "address"
+        }
+      ],
+      "stateMutability": "view"
+    },
+    {
+      "type": "function",
+      "name": "owner",
+      "inputs": [],
+      "outputs": [
+        {
+          "type": "address",
+          "name": "",
+          "internalType": "address"
+        }
+      ],
+      "stateMutability": "view"
+    },
+    {
+      "type": "function",
+      "name": "removeHotel",
+      "inputs": [
+        {
+          "type": "address",
+          "name": "hotelAddress",
+          "internalType": "address"
+        }
+      ],
+      "outputs": [],
+      "stateMutability": "nonpayable"
+    },
+    {
+      "type": "function",
+      "name": "renounceOwnership",
+      "inputs": [],
+      "outputs": [],
+      "stateMutability": "nonpayable"
+    },
+    {
+      "type": "function",
+      "name": "stablecoin",
+      "inputs": [],
+      "outputs": [
+        {
+          "type": "address",
+          "name": "",
+          "internalType": "contract IERC20"
+        }
+      ],
+      "stateMutability": "view"
+    },
+    {
+      "type": "function",
+      "name": "transferOwnership",
+      "inputs": [
+        {
+          "type": "address",
+          "name": "newOwner",
+          "internalType": "address"
+        }
+      ],
+      "outputs": [],
+      "stateMutability": "nonpayable"
+    }
+  ]
