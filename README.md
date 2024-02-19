@@ -1,1 +1,1 @@
-(Devpost)[https://devpost.com/software/travelhub]
+[Devpost](https://devpost.com/software/travelhub)
